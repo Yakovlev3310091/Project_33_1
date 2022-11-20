@@ -31,9 +31,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     env_file:
-      - ./.env
-    environment:
-      POSTGRES_HOST: postgres
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -41,8 +39,6 @@ services:
         condition: service_completed_successfully
     ports:
       - "8000:8000"
-    volumes:
-      - ./todolist/:/app
   migrations:
     build: .
     depends_on:
@@ -51,7 +47,7 @@ services:
     env_file:
       - .env
     command: >
-      sh -c "python3 manage.py migrate"
+      sh -c "python ./manage.py migrate"
   db:
     image: postgres:latest
     environment:
