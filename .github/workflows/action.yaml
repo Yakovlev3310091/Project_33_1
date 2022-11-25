@@ -2,7 +2,6 @@ name: Build and deploy workflow
 on: [push]
 jobs:
   build_and_push:
-  steps:
     runs-on: ubuntu-latest
     steps:
       - name: clone code
@@ -47,5 +46,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           scripts:
             cd todolist
-            echo ${{ secrets.PASSWORD
+            echo ${{ secrets.PASSWORD }} | sudo -S docker-compose down
+            echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up -d
 
