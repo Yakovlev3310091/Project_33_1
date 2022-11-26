@@ -35,7 +35,7 @@ services:
       db:
         condition: service_healthy
     command: >
-      sh -c "python3 manage.py migrate"
+      sh -c "python ./manage.py migrate"
   db:
     image: postgres:latest
     environment:
@@ -46,7 +46,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - ./pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
