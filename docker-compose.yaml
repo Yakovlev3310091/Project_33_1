@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     env_file:
-      - .env
+      - docker_env
     depends_on:
       db:
         condition: service_healthy
@@ -26,7 +26,7 @@ services:
       db:
         condition: service_healthy
     env_file:
-      - .env
+      - docker_env
     command: >
       sh -c "python ./manage.py migrate"
   db:
@@ -37,7 +37,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     restart: always
     env_file:
-      - .env
+      - docker_env
     volumes:
       - pg_data:/var/lib/postgresql/data
     healthcheck:
