@@ -20,3 +20,23 @@ class GoalCategory(models.Model):
             self.created = timezone.now()      # проставляем дату создания
         self.updated = timezone.now()          # проставляем дату обновления
         return super().save(*args, **kwargs)
+
+
+class Goal(models.Model):
+
+    class Meta:
+        verbose_name = "Цель"
+        verbose_name_plural = "Цели"
+    pass
+
+
+class GoalComment(models.Model):
+
+    class Meta:
+        verbose_name = "Комментарий"
+        verbose_name_plural = "Комментарии"
+    pass
+
+
+
+
