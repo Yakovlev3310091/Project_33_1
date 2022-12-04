@@ -53,7 +53,7 @@ class LoginSerializer(serializers.ModelSerializer):
         return user
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = USER_MODEL
@@ -81,6 +81,8 @@ class UpdatePasswordSerializer(serializers.Serializer):
         instance.password = make_password(validated_data['new_password'])
         instance.save()
         return instance
+
+
 
 
 

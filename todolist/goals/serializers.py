@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from goals.models import GoalCategory
-
-from core.serializers import ProfileSerializer
+from core.serializers import UserSerializer
 
 
 class GoalCreateSerializer(serializers.ModelSerializer):
@@ -14,7 +13,7 @@ class GoalCreateSerializer(serializers.ModelSerializer):
 
 
 class GoalCategorySerializer(serializers.ModelSerializer):
-    user = ProfileSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = GoalCategory

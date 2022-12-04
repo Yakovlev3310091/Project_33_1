@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model, login, logout
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 
-from .serializers import RegistrationSerializer, LoginSerializer, ProfileSerializer, UpdatePasswordSerializer
+from .serializers import RegistrationSerializer, LoginSerializer, UserSerializer, UpdatePasswordSerializer
 
 USER_MODEL = get_user_model()
 
@@ -22,8 +22,8 @@ class LoginView(generics.GenericAPIView):
         return Response(serializer.data)
 
 
-class ProfileView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = ProfileSerializer
+class UserView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserSerializer
     queryset = USER_MODEL.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 

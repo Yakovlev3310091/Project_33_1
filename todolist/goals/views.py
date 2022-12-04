@@ -1,11 +1,9 @@
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions, filters
-
 from goals.models import GoalCategory
 from goals.serializers import GoalCreateSerializer
 from rest_framework.pagination import LimitOffsetPagination
-
-from goals.serializers import GoalCategorySerializer
+from goals.serializers import GoalCategorySerializer, GoalCreateSerializer
 
 
 class GoalCategoryCreateView(CreateAPIView):
