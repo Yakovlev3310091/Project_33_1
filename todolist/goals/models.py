@@ -60,14 +60,23 @@ class Goal(models.Model):
         return super().save(*args, **kwargs)
 
 
-
 class GoalComment(models.Model):
 
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
-    pass
 
+    text = models.TextField(verbose_name="Текст")
+    goal = models.ForeignKey(Goal, verbose_name="Цель", related_name="comments", on_delete=models.PROTECT)
+    user = models.ForeignKey(User, verbose_name="Пользователь", related_name="comments", on_delete=models.PROTECT)
+    created = models.DateTimeField(verbose_name="Дата создания")
+    updated = models.DateTimeField(verbose_name="Дата последнего обновления")
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        self.updated = timezone.now()
+        return super().save(*args, **kwargs)
 
 
 
