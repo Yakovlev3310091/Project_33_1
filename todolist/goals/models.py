@@ -47,9 +47,9 @@ class Goal(models.Model):
     priority = models.PositiveSmallIntegerField(
         verbose_name="Приоритет", choices=Priority.choices, default=Priority.medium)
     due_date = models.DateField(verbose_name="Дата выполнения")
-    user = models.ForeignKey("core.User", verbose_name="Автор", on_delete=models.PROTECT())
+    user = models.ForeignKey(User, verbose_name="Автор", on_delete=models.PROTECT)
     category = models.ForeignKey(GoalCategory, verbose_name="Категория",
-                                 related_name="goals", on_delete=models.CASCADE())
+                                 related_name="goals", on_delete=models.CASCADE)
     created = models.DateTimeField(verbose_name="Дата создания")
     updated = models.DateTimeField(verbose_name="Дата последнего обновления")
 
