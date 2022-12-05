@@ -20,8 +20,9 @@ services:
       migrations:
         condition: service_completed_successfully
   migrations:
-    build: .
-    image: alexpetrovi4/skypro_ayakovlev_app
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       db:
         condition: service_healthy
