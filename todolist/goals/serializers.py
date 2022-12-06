@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from goals.models import GoalCategory, Goal, GoalComment
+from goals.models import GoalCategory, Goal, GoalComment, Board, BoardParticipant
 from core.serializers import ProfileSerializer
 
 
