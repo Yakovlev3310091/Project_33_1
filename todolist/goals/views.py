@@ -62,8 +62,8 @@ class GoalListView(ListAPIView):
         filters.SearchFilter,
     ]
     filterset_class = GoalDateFilter
-    ordering_fields = ["title", "created"]
-    ordering = ["title"]
+    ordering_fields = ["-priority", "due_date"]
+    ordering = ["-priority", "due_date"]
     search_fields = ["title"]
 
     def get_queryset(self):
@@ -100,8 +100,8 @@ class GoalCommentListView(ListAPIView):
         filters.SearchFilter,
     ]
 
-    ordering_fields = ["goal"]
-    ordering = ["-created"]
+    filterset_fields = ["goal"]
+    ordering = ["-id"]
 
 
     def get_queryset(self):
@@ -115,6 +115,11 @@ class GoalCommentView(RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return GoalComment.objects.filter(user=self.request.user)
+
+    def perform_destroy(self, instance):
+        instance.status = Goal.Status.archived
+        instance.save()
+        return instance
 
 
 
