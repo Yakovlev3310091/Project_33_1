@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from goals.models import GoalCategory, Goal, GoalComment, Board, BoardParticipant
 from core.serializers import ProfileSerializer
+from core.models import User
 
 
 class GoalCategoryCreateSerializer(serializers.ModelSerializer):
@@ -90,12 +91,8 @@ class BoardCreateSerializer(serializers.ModelSerializer):
 
 
 class BoardParticipantSerializer(serializers.ModelSerializer):
-    role = serializers.ChoiceField(
-        required=True, choices=BoardParticipant.editable_choices
-    )
-    user = serializers.SlugRelatedField(
-        slug_field="username", queryset=User.objects.all()
-    )
+    role = serializers.ChoiceField(required=True, choices=BoardParticipant.Role.choices)
+    user = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
 
     class Meta:
         model = BoardParticipant
