@@ -2,11 +2,9 @@ from django.db import transaction
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions, filters
-
 from goals.filters import GoalDateFilter
 from goals.models import GoalCategory, Goal, GoalComment, Board, BoardParticipant
 from rest_framework.pagination import LimitOffsetPagination
-
 from goals.permissions import BoardPermissions
 from goals.serializers import GoalCategoryCreateSerializer, GoalCategorySerializer, GoalCreateSerializer, \
     GoalSerializer, GoalCommentCreateSerializer, GoalCommentSerializer, BoardSerializer, BoardCreateSerializer, \
@@ -45,9 +43,12 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
         return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
 
     def perform_destroy(self, instance):
-        instance.is_deleted = True
-        instance.save()
+        with transaction.atomic():
+            instance.is_deleted = True
+            instance.save()
+            Goal.objects.filter(category=instance).update(status=Goal.Status.archived)
         return instance
+
 
 
 class GoalCreateView(CreateAPIView):
@@ -154,12 +155,10 @@ class BoardView(RetrieveUpdateDestroyAPIView):
 
 class BoardListView(ListAPIView):
     model = Board
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, BoardPermissions]
     pagination_class = LimitOffsetPagination
     serializer_class = BoardListSerializer
-    filter_backends = [
-        filters.OrderingFilter,
-    ]
+    filter_backends = [filters.OrderingFilter]
     ordering = ["title"]
 
     def get_queryset(self):
