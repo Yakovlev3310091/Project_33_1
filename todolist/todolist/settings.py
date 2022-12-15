@@ -49,10 +49,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_spectacular',
     'django_filters',
-    'core',
+    'bot',
     'goals',
-
-
+    'core',
 
 
 ]

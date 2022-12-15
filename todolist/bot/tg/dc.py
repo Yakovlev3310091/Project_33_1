@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 import marshmallow
@@ -32,7 +32,7 @@ class Message:
     message_id: int
     date: int
     text: str
-    from_: MessageFrom
+    from_: MessageFrom = field(metadata={"data_key": "from"})
     chat: Chat
 
     class Meta:
@@ -42,7 +42,7 @@ class Message:
 @dataclass
 class SendMessageResponse:
     ok: bool
-    result: Message  # todo
+    result: Message
 
     class Meta:
         unknown = marshmallow.EXCLUDE
@@ -60,7 +60,7 @@ class UpdateObj:
 @dataclass
 class GetUpdatesResponse:
     ok: bool
-    result: List[UpdateObj]  # todo
+    result: List[UpdateObj]
 
     class Meta:
         unknown = marshmallow.EXCLUDE

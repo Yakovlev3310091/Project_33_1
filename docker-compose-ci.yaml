@@ -19,11 +19,24 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
       SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
+      TG_TOKEN: ${TG_TOKEN}
     depends_on:
       db:
         condition: service_healthy
       migrations:
         condition: service_completed_successfully
+  bot:
+    image: alexpetrovi4/skypro_ayakovlev_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    restart: always
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+    env_file:
+      - docker_env
+    command: >
+      sh -c "python ./manage.py runbot"
   migrations:
     image: alexpetrovi4/skypro_ayakovlev_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     environment:
@@ -35,6 +48,7 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
       SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
+      TG_TOKEN: ${TG_TOKEN}
     depends_on:
       db:
         condition: service_healthy

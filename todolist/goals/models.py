@@ -44,6 +44,9 @@ class BoardParticipant(DatesModelMixin):
     role = models.PositiveSmallIntegerField(verbose_name="Роль",
                                             choices=Role.choices, default=Role.owner)
 
+    def __str__(self):
+        return f"Доска{self.user.username}"
+
 
 class GoalCategory(models.Model):
     class Meta:

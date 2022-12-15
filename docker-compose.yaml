@@ -19,6 +19,19 @@ services:
         condition: service_healthy
       migrations:
         condition: service_completed_successfully
+  bot:
+    build:
+      context: .
+    restart: always
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+    env_file:
+      - docker_env
+    command: >
+      sh -c "python ./manage.py runbot"
   migrations:
     build:
       context: .
