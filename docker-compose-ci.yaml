@@ -27,14 +27,22 @@ services:
         condition: service_completed_successfully
   bot:
     image: alexpetrovi4/skypro_ayakovlev_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-    restart: always
+    #restart: always
+    environment:
+      DEBUG: ${DEBUG}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      SECRET_KEY: ${SECRET_KEY}
+      SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
+      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
+      TG_TOKEN: ${TG_TOKEN}
     depends_on:
       migrations:
         condition: service_completed_successfully
       db:
         condition: service_healthy
-    env_file:
-      - docker_env
     command: >
       sh -c "python ./manage.py runbot"
   migrations:
