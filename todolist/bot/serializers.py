@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from bot.models import TgUser
-from bot.tg.client import TgClient
+from bot.tg import tg_client
 
 
 class TgUserVerCodSerializer(serializers.ModelSerializer):
@@ -12,6 +12,6 @@ class TgUserVerCodSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance = super().update(instance, validated_data)
-        TgClient.send_message(chat_id=instance.chat_id, text="Успешно")
+        tg_client.send_message(chat_id=instance.chat_id, text="Успешно")
         return instance
     

@@ -29,7 +29,7 @@ services:
     image: alexpetrovi4/skypro_ayakovlev_app:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     restart: always
     depends_on:
-      migration:
+      migrations:
         condition: service_completed_successfully
       db:
         condition: service_healthy

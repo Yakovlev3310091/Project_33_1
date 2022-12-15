@@ -10,7 +10,7 @@ class MessageFrom:
     id: int
     is_bot: bool
     first_name: str
-    username: str
+    username: str = ""
 
     class Meta:
         unknown = marshmallow.EXCLUDE
@@ -19,9 +19,9 @@ class MessageFrom:
 @dataclass
 class Chat:
     id: int
-    username: str
     first_name: str
     type: str
+    username: str = ""
 
     class Meta:
         unknown = marshmallow.EXCLUDE

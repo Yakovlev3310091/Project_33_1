@@ -1,5 +1,4 @@
 from django.core.management import BaseCommand
-
 from bot.tg import tg_client
 from bot.tg.bot import TgBot
 
