@@ -68,6 +68,7 @@ class TgBot:
                 else:
                     self.tg_client.send_message(chat_id=user_tg.chat_id, text=f"Такой категории нет")
 
+
     def get_goals_user(self, user_tg: TgUser) -> None:
         goals = (Goal.objects.filter(category__board__participants__user=user_tg.user).
                  exclude(status=Goal.Status.archived))
@@ -88,12 +89,15 @@ class TgBot:
                      f"Дедлайн - {goal.due_date.strftime('%Y-%m-%d') if goal.due_date else 'Не указан'}"
             )
 
+
     def check_user(self, user_ud: int, chat_id: int) -> TgUser | bool:
         user_tg, created = TgUser.objects.get_or_create(user_ud=user_ud, chat_id=chat_id)
 
         ver_cod = generator_code_verification()
 
         if created:
+            user_tg.verification_code = ver_cod
+            user_tg.save()
             self.tg_client.send_message(
                 chat_id=user_tg.chat_id,
                 text=f"Привет новый пользователь\n"
@@ -112,7 +116,8 @@ class TgBot:
 
         return user_tg
 
-    def run(self):
+
+    def run(self) -> None:
         """
         Запуск бота
         """

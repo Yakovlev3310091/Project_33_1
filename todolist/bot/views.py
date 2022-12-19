@@ -11,6 +11,7 @@ class TgUserUpdate(generics.UpdateAPIView):
     serializer_class = TgUserVerCodSerializer
     permission_classes = (IsAuthenticated,)
 
+
     def get_object(self):
         try:
             user = self.model.objects.get(verification_code=self.request.data.get('verification_code'))
