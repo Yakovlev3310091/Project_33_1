@@ -1,6 +1,5 @@
 import pytest
 from django.urls import reverse
-
 from goals import serializers
 from tests import factories
 
@@ -58,13 +57,13 @@ def test_retrieve(auth_client, goal, new_user, category):
     assert resource.data == expected_response
 
 
-# @pytest.mark.django_db
-# def test_update(auth_client, new_user, goal, category):
-#     response = auth_client.put(reverse("goal_pk", args=[goal.pk]),
-#                                data={"title": "test updated goal", "category": category.pk})
-#
-#     assert response.status_code == 200
-#     assert response.data.get("title") == "test updated goal"
+@pytest.mark.django_db
+def test_update(auth_client, new_user, goal, category):
+    response = auth_client.put(reverse("goal_pk", args=[goal.pk]),
+                               data={"title": "test updated goal", "category": category.pk})
+
+    assert response.status_code == 200
+    assert response.data.get("title") == "test updated goal"
 
 
 @pytest.mark.django_db

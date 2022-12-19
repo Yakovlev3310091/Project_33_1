@@ -1,8 +1,6 @@
 import json
-
 import pytest
 from django.urls import reverse
-
 from goals import serializers
 from tests import factories
 
