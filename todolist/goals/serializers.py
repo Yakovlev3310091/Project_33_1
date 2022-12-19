@@ -1,7 +1,11 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
+from goals import models
 from goals.models import GoalCategory, Goal, GoalComment, Board, BoardParticipant
 from core.serializers import ProfileSerializer
 from core.models import User
+from django.db import transaction
 
 
 class GoalCategoryCreateSerializer(serializers.ModelSerializer):
