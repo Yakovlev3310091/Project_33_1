@@ -151,3 +151,6 @@ crashlytics-build.properties
 fabric.properties
 
 docker_env
+
+todolist/core/__pycaсhe__/
+todolist/todolist/__pycaсhe__/

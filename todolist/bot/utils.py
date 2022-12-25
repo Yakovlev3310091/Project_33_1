@@ -2,7 +2,7 @@ import random
 import string
 
 
-def generator_code_verification():
+def generator_code_verification() -> str:
     """
     Функция для генерации кода верификации
     """
