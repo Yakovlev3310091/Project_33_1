@@ -21,7 +21,7 @@ services:
       SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
       TG_TOKEN: ${TG_TOKEN}
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
       migrations:
         condition: service_completed_successfully
@@ -41,7 +41,7 @@ services:
     depends_on:
       migrations:
         condition: service_completed_successfully
-      db:
+      postgres:
         condition: service_healthy
     command: >
       sh -c "python ./manage.py runbot"
@@ -58,11 +58,11 @@ services:
       SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
       TG_TOKEN: ${TG_TOKEN}
     depends_on:
-      db:
+      postgres:
         condition: service_healthy
     command: >
       sh -c "python ./manage.py migrate"
-  db:
+  postgres:
     image: postgres:latest
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
